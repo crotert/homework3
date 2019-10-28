@@ -3,6 +3,7 @@ package cdm.depaul.edu.se480.homework3.movierecommendationservice.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -11,6 +12,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @Service
 public class MovieRecommendationService {
 	
+	@Autowired
 	private RestTemplate restTemplate;
 	
 	@HystrixCommand(fallbackMethod="defaultMovies")

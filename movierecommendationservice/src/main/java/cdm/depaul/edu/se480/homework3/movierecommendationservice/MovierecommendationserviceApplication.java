@@ -6,10 +6,12 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import cdm.depaul.edu.se480.homework3.movierecommendationservice.service.MovieRecommendationService;
+
 @SpringBootApplication
 @EnableCircuitBreaker
 public class MovierecommendationserviceApplication {
-
+	
 	@Bean
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();

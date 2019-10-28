@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import cdm.depaul.edu.se480.homework3.movierecommendationservice.controller.MovieRecommendationControllerImpl;
+import cdm.depaul.edu.se480.homework3.movierecommendationservice.service.MovieRecommendationService;
 
 @SpringBootTest
 class MovierecommendationserviceApplicationTests {
@@ -23,8 +23,7 @@ class MovierecommendationserviceApplicationTests {
 	
 	@InjectMocks
 	//private MovieService movieService = Mockito.mock(MovieService.class);
-	private MovieRecommendationControllerImpl movieService = new MovieRecommendationControllerImpl();
-	
+	private MovieRecommendationService movieService = new MovieRecommendationService();
 	@Test
 	void contextLoads() {
 	}
@@ -32,13 +31,7 @@ class MovierecommendationserviceApplicationTests {
 	@Test
 	public void testGetMoviesAgeUnder13() {
 		Mockito.when(restTemplate.getForObject("http://localhost:8081/getAge", int.class)).thenReturn(12);		
-		List<String> movies = null;
-		try {
-			movies = movieService.getRecommendedMovies();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		List<String> movies = movieService.getRecommendedMovies();		
 		List<String> expectedResult = Arrays.asList("Shrek","Coco","The Incredibles");
 		assertEquals(expectedResult, movies);
 	}
@@ -46,13 +39,7 @@ class MovierecommendationserviceApplicationTests {
 	@Test
 	public void testGetMoviesAgeIs13() {
 		Mockito.when(restTemplate.getForObject("http://localhost:8081/getAge", int.class)).thenReturn(13);
-		List<String> movies = null;
-		try {
-			movies = movieService.getRecommendedMovies();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		List<String> movies = movieService.getRecommendedMovies();		
 		List<String> expectedResult = Arrays.asList("The Avengers", "The Dark Knight", "Inception");
 		assertEquals(expectedResult, movies);
 	}
@@ -74,13 +61,7 @@ class MovierecommendationserviceApplicationTests {
 	@Test
 	public void testGetMoviesAgeIs17() {
 		Mockito.when(restTemplate.getForObject("http://localhost:8081/getAge", int.class)).thenReturn(17);
-		List<String> movies = null;
-		try {
-			movies = movieService.getRecommendedMovies();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		List<String> movies = movieService.getRecommendedMovies();	
 		List<String> expectedResult = Arrays.asList("The Godfather", "Deadpool", "Saving Private Ryan");
 		assertEquals(expectedResult, movies);		
 	}
@@ -88,23 +69,16 @@ class MovierecommendationserviceApplicationTests {
 	@Test
 	public void testGetMoviesAgeIsOver17() {
 		Mockito.when(restTemplate.getForObject("http://localhost:8081/getAge", int.class)).thenReturn(20);
-		List<String> movies = null;
-		try {
-			movies = movieService.getRecommendedMovies();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
+		List<String> movies = movieService.getRecommendedMovies();		
 		List<String> expectedResult = Arrays.asList("The Godfather", "Deadpool", "Saving Private Ryan");
 		assertEquals(expectedResult, movies);		
 	}
 	
 	@Test
-	public void testUserServiceUnavailable() throws Exception {
+	public void testUserServiceUnavailable() {
 		Mockito.when(restTemplate.getForObject("http://localhost:8081/getAge", int.class)).thenThrow(RestClientException.class);
 		List<String> movies = movieService.getRecommendedMovies();
 		List<String> expectedResult = Arrays.asList("Shrek", "Coco", "The Incredibles");
 		assertEquals(expectedResult, movies);
 	}
-
 }
