@@ -6,9 +6,6 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
-import cdm.depaul.edu.se480.homework3.userservice.controller.UserServiceController;
-import cdm.depaul.edu.se480.homework3.userservice.controller.UserServiceControllerImpl;
-
 @SpringBootApplication
 @EnableCircuitBreaker
 public class MovierecommendationserviceApplication {
